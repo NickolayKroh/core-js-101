@@ -199,7 +199,6 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-  if (width < 2 || height < 2) return;
   let rect = '';
   rect += `┌${'─'.repeat(width - 2)}┐\n`;
 
@@ -208,7 +207,6 @@ function getRectangleString(width, height) {
 
   rect += `└${'─'.repeat(width - 2)}┘\n`;
 
-  // eslint-disable-next-line consistent-return
   return rect;
 }
 

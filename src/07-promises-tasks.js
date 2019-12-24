@@ -99,18 +99,16 @@ function getFastestPromise(array) {
  *    });
  *
  */
-async function chainPromises(array, action) {
-  let res1;
-  try {
-    res1 = await array[0];
-
-    for (let i = 1; i < array.length; i += 1) {
-      // eslint-disable-next-line no-await-in-loop
-      res1 = action(res1, await array[i]);
-    }
-    // eslint-disable-next-line no-empty
-  } catch (e) {}
-  return Promise.resolve(res1);
+function chainPromises(array, action) {
+  const resultArr = [];
+  const p = Promise.resolve(array);
+  return p
+    .then((arr) => {
+      arr.forEach((el) => {
+        el.then((val) => resultArr.push(val)).catch(() => 0);
+      });
+    })
+    .then(() => resultArr.reduce((result, rec) => action(result, rec)));
 }
 
 module.exports = {
